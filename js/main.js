@@ -1,33 +1,41 @@
 // Goals:
-// - dodelat mezicas - bude se ukazovat v tabulce vedle
+// - dodelat mezicas - casy se ukazuji bez pocatecnich nul
 // - dat stop a reset do stejneho buttonu
 // - presnejsi mereni casu
+// - double click on start does not allow to stop/reset
+// - time difference between laps
 
 
 let minute = 0;
 let second = 0;
 let msecond = 0;
 let interval;
+let lapNow;
 
 // 1. listen to buttons
 const buttons = document.querySelectorAll('.button');
 
-Array.from(buttons).forEach(element => element.addEventListener('click', checkTime));
+Array.from(buttons).forEach(element => element.addEventListener('click', pushButton));
 
 
-function checkTime(event){
+function pushButton(event){
     
-    // 2. if start button - start the watch
+    // If Start button - start the watch
     if (event.target.classList.contains('start')){
         interval = setInterval(startTimer);
 
-    // 3. if stop button - stop the watch and keep the time
+    // If Lap button - record the time
+    } else if(event.target.classList.contains('lap')){
+        lapNow = `<div class="lap">${minute} : ${second} : ${msecond}</div>`;
+        lapRecord.innerHTML += lapNow; // document.querySelector('#lapRecord').innerHTML += lapNow;
 
+    
+    // If Stop button - stop the watch and keep the time
     } else if(event.target.classList.contains('stop')){
         clearInterval(interval);
     
-    // 4. if reset button - reset the watch to zero
-
+    
+    // If Reset button - reset the watch to zero
     } else if(event.target.classList.contains('reset')){
         clearInterval(interval);
         minute = "00";
@@ -36,7 +44,7 @@ function checkTime(event){
         document.querySelector('.msec').innerHTML = msecond;
         document.querySelector('.sec').innerHTML = second;
         document.querySelector('.min').innerHTML = minute;
-        
+        lapRecord.innerHTML = "";
     }
 }
 

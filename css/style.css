@@ -39,6 +39,12 @@ body {
      padding: 10px 50px;
 }
 
+.button:hover{
+     background: white;
+     color: black;
+     border: 2px solid black;
+}
+
 h2{
      margin: 20px 0;
 }
@@ -49,6 +55,10 @@ h2{
 
 .stop{
      margin: 0 25px;
+}
+
+.lap{
+     margin-left: 25px;
 }
 
 .time{
