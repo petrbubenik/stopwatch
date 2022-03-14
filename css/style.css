@@ -49,6 +49,10 @@ h2{
      margin: 20px 0;
 }
 
+div + h2{
+     margin: 75px 0 20px 0;
+}
+
 .buttons{
      margin-top: 32px;
 }
