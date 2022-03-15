@@ -1,8 +1,6 @@
 // Goals:
-// - dat stop a reset do stejneho buttonu
-// - presnejsi mereni casu
-// - double click on start does not allow to stop/reset
 // - time difference between laps
+// - presnejsi mereni casu
 
 
 let minute = "00";
@@ -10,6 +8,10 @@ let second = "00";
 let msecond = "00";
 let interval;
 let lapNow;
+let startBtn = document.querySelector('.start');
+let lapBtn = document.querySelector('.lap');
+let stopBtn = document.querySelector('.stop');
+
 
 // 1. listen to buttons
 const buttons = document.querySelectorAll('.button');
@@ -22,17 +24,17 @@ function pushButton(event){
     // If Start button pushed - start the watch:
     if (event.target.classList.contains('start')){
         interval = setInterval(startTimer);
+        startBtn.classList.add('block');
+        lapBtn.classList.remove('block');
+        stopBtn.classList.remove('block');
+        stopBtn.classList.remove('reset');
+        stopBtn.innerText = 'Stop';
+
     } else if(event.target.classList.contains('lap')){
         lapTime()
-            
-    // If Stop button pushed - stop the watch and log the time:
-    } else if(event.target.classList.contains('stop')){
-        clearInterval(interval);
-        lapTime()
-    
-    
+
     // If Reset button pushed - reset the watch to zero and remove lap times:
-    } else if(event.target.classList.contains('reset')){
+    }else if(event.target.classList.contains('reset')){
         clearInterval(interval);
         minute = "00";
         second = "00";
@@ -41,6 +43,16 @@ function pushButton(event){
         document.querySelector('.sec').innerHTML = second;
         document.querySelector('.min').innerHTML = minute;
         lapRecord.innerHTML = "";
+        startBtn.classList.remove('block');
+    
+    // If Stop button pushed - stop the watch and log the time:
+    }else if(event.target.classList.contains('stop')){
+    clearInterval(interval);
+    lapTime();
+    stopBtn.classList.add('reset');
+    startBtn.classList.remove('block');
+    lapBtn.classList.add('block');
+    stopBtn.innerText = 'Reset';
     }
 }
 

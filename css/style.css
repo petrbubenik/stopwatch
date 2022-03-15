@@ -37,6 +37,7 @@ body {
      border: 2px solid white;
      border-radius: 32px;
      padding: 10px 50px;
+     width: 700px;
 }
 
 .button:hover{
@@ -73,3 +74,7 @@ div + h2{
 /******************************************
 /* ADDITIONAL STYLES
 /*******************************************/
+
+.block{
+     pointer-events: none;
+}
