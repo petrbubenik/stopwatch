@@ -1,7 +1,5 @@
 // Goals:
 // - time difference between laps
-// - presnejsi mereni casu
-// - use padStart() for two places mins,secs,msecs?
 
 
 let minute = "00";
@@ -9,6 +7,9 @@ let second = "00";
 let msecond = "00";
 let interval;
 let lapNow;
+let startTime;
+let lapT;
+let stopTime;
 let startBtn = document.querySelector('.start');
 let lapBtn = document.querySelector('.lap');
 let stopBtn = document.querySelector('.stop');
@@ -30,6 +31,7 @@ function pushButton(event){
         stopBtn.classList.remove('block');
         stopBtn.classList.remove('reset');
         stopBtn.innerText = 'Stop';
+        startTime = Date.now();
 
     } else if(event.target.classList.contains('lap')){
         lapTime()
@@ -42,6 +44,9 @@ function pushButton(event){
         document.querySelector('.min').innerHTML = "00";
         lapRecord.innerHTML = "";
         startBtn.classList.remove('block');
+        startTime = 0;
+        stopTime = 0;
+        lapT = 0;
     
     // If Stop button pushed - stop the watch and log the time:
     }else if(event.target.classList.contains('stop')){
@@ -51,77 +56,22 @@ function pushButton(event){
     startBtn.classList.remove('block');
     lapBtn.classList.add('block');
     stopBtn.innerText = 'Reset';
+    stopTime = new Date();
     }
 }
 
 // If Lap button pushed - record the time
 function lapTime(){
-    lapNow = `<div class="lap">${minute} : ${second} : ${msecond}</div>`;
+    lapNow = `<div class="lap">${document.querySelector('.min').innerHTML} : ${document.querySelector('.sec').innerHTML} : ${document.querySelector('.msec').innerHTML}</div>`;
     lapRecord.innerHTML += lapNow;
+    lapT = new Date()
 }
 
 function startTimer(){
-    msecond++;
- 	if(msecond < 10){
-        msecond = "0" + msecond;
- 		document.querySelector('.msec').innerHTML = msecond;
- 	}else if(msecond >= 10 && msecond < 100){
-	    document.querySelector('.msec').innerHTML = msecond;
- 	}else if(msecond = 100){
- 		second++;
-        second = "0" + second;
-        document.querySelector('.sec').innerHTML = second;
- 		msecond =0;
- 		document.querySelector('.msec').innerHTML = "0" + 0; 	
-    }
- 	
-    if (second > 9){
-        second = second.slice(-2);
- 		document.querySelector('.sec').innerHTML = second;
- 	}
-    
-    if (second > 59){
-        minute++;
-        minute = "0" + minute;
-        document.querySelector('.min').innerHTML = minute;
-        second = 0;
-        document.querySelector('.sec').innerHTML = "0" + 0;
-    }
-    if (minute > 9){
-        minute = minute.slice(-2);
-        document.querySelector('.min').innerHTML = minute;
-    }
-
+    minute = Math.floor((Date.now() - startTime)/60000);
+    second = Math.floor((Date.now() - startTime) / 1000) - (60 * minute);
+    msecond = Math.round(((Date.now() - startTime) - 1000 * second - 60000 * minute)/10);
+    document.querySelector('.msec').innerHTML = msecond.toString().length < 2 ? "0" + msecond : msecond;
+    document.querySelector('.sec').innerHTML = second.toString().length < 2 ? ("0" + second) : second;
+    document.querySelector('.min').innerHTML = minute.toString().length < 2 ? ("0" + minute) : minute;
 }
-
-
-// //Objects training:
-// function Stopwatch(){
-//     let startTime, endTime, running, duration = 0;
-//     this.start = function(){
-//         if (running)
-//             throw new Error('Stopwatch has already started.')
-//         running = true;
-//         startTime = new Date();
-//     };
-
-//     this.stop = function(){
-//         if (!running)
-//             throw new Error('Stopwatch is not started.')
-//         running = false;
-//         endTime = new Date();
-//         const seconds = (endTime.getTime() - startTime.getTime()) / 1000;
-//         duration += seconds;
-//     };
-
-//     this.reset = function(){
-//         startTime = null;
-//         endTime = null;
-//         running = false;
-//         duration = 0;
-//     };
-
-//     Object.defineProperty(this, 'duration', {
-//         get: function() {return duration;}
-//     });
-// }
