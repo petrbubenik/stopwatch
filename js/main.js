@@ -1,15 +1,14 @@
 // Goals:
+// - clear the code after the interval logic change (setInterval() -> Date.now())
+// - 100 mseconds sometimes - change in startTimer()
 // - time difference between laps
-
+// - stop/reset button same width
 
 let minute = "00";
 let second = "00";
 let msecond = "00";
 let interval;
-let lapNow;
 let startTime;
-let lapT;
-let stopTime;
 let startBtn = document.querySelector('.start');
 let lapBtn = document.querySelector('.lap');
 let stopBtn = document.querySelector('.stop');
@@ -56,15 +55,13 @@ function pushButton(event){
     startBtn.classList.remove('block');
     lapBtn.classList.add('block');
     stopBtn.innerText = 'Reset';
-    stopTime = new Date();
     }
 }
 
 // If Lap button pushed - record the time
 function lapTime(){
-    lapNow = `<div class="lap">${document.querySelector('.min').innerHTML} : ${document.querySelector('.sec').innerHTML} : ${document.querySelector('.msec').innerHTML}</div>`;
+    let lapNow = `<div class="lap">${document.querySelector('.min').innerHTML} : ${document.querySelector('.sec').innerHTML} : ${document.querySelector('.msec').innerHTML}</div>`;
     lapRecord.innerHTML += lapNow;
-    lapT = new Date()
 }
 
 function startTimer(){
