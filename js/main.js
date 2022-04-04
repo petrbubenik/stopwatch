@@ -1,6 +1,7 @@
 // Goals:
 // - time difference between laps
 // - presnejsi mereni casu
+// - use padStart() for two places mins,secs,msecs?
 
 
 let minute = "00";
@@ -36,12 +37,9 @@ function pushButton(event){
     // If Reset button pushed - reset the watch to zero and remove lap times:
     }else if(event.target.classList.contains('reset')){
         clearInterval(interval);
-        minute = "00";
-        second = "00";
-        msecond = "00";
-        document.querySelector('.msec').innerHTML = msecond;
-        document.querySelector('.sec').innerHTML = second;
-        document.querySelector('.min').innerHTML = minute;
+        document.querySelector('.msec').innerHTML = "00";
+        document.querySelector('.sec').innerHTML = "00";
+        document.querySelector('.min').innerHTML = "00";
         lapRecord.innerHTML = "";
         startBtn.classList.remove('block');
     
@@ -95,3 +93,35 @@ function startTimer(){
     }
 
 }
+
+
+// //Objects training:
+// function Stopwatch(){
+//     let startTime, endTime, running, duration = 0;
+//     this.start = function(){
+//         if (running)
+//             throw new Error('Stopwatch has already started.')
+//         running = true;
+//         startTime = new Date();
+//     };
+
+//     this.stop = function(){
+//         if (!running)
+//             throw new Error('Stopwatch is not started.')
+//         running = false;
+//         endTime = new Date();
+//         const seconds = (endTime.getTime() - startTime.getTime()) / 1000;
+//         duration += seconds;
+//     };
+
+//     this.reset = function(){
+//         startTime = null;
+//         endTime = null;
+//         running = false;
+//         duration = 0;
+//     };
+
+//     Object.defineProperty(this, 'duration', {
+//         get: function() {return duration;}
+//     });
+// }
