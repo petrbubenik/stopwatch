@@ -1,17 +1,16 @@
 // Goals:
-// - clear the code after the interval logic change (setInterval() -> Date.now())
-// - 100 mseconds sometimes - change in startTimer()
 // - time difference between laps
-// - stop/reset button same width
 
-let minute = "00";
-let second = "00";
-let msecond = "00";
+
 let interval;
+let lapNow;
 let startTime;
 let startBtn = document.querySelector('.start');
 let lapBtn = document.querySelector('.lap');
 let stopBtn = document.querySelector('.stop');
+let msec = document.querySelector('.msec');
+let sec = document.querySelector('.sec');
+let min = document.querySelector('.min');
 
 
 // 1. listen to buttons
@@ -38,14 +37,12 @@ function pushButton(event){
     // If Reset button pushed - reset the watch to zero and remove lap times:
     }else if(event.target.classList.contains('reset')){
         clearInterval(interval);
-        document.querySelector('.msec').innerHTML = "00";
-        document.querySelector('.sec').innerHTML = "00";
-        document.querySelector('.min').innerHTML = "00";
+        msec.innerHTML = "00";
+        sec.innerHTML = "00";
+        min.innerHTML = "00";
         lapRecord.innerHTML = "";
         startBtn.classList.remove('block');
         startTime = 0;
-        stopTime = 0;
-        lapT = 0;
     
     // If Stop button pushed - stop the watch and log the time:
     }else if(event.target.classList.contains('stop')){
@@ -58,17 +55,17 @@ function pushButton(event){
     }
 }
 
-// If Lap button pushed - record the time
+// If Lap button pushed - record the lap time:
 function lapTime(){
-    let lapNow = `<div class="lap">${document.querySelector('.min').innerHTML} : ${document.querySelector('.sec').innerHTML} : ${document.querySelector('.msec').innerHTML}</div>`;
+    lapNow = `<div class="lap">${min.innerHTML} : ${sec.innerHTML} : ${msec.innerHTML}</div>`;
     lapRecord.innerHTML += lapNow;
 }
 
 function startTimer(){
-    minute = Math.floor((Date.now() - startTime)/60000);
-    second = Math.floor((Date.now() - startTime) / 1000) - (60 * minute);
-    msecond = Math.round(((Date.now() - startTime) - 1000 * second - 60000 * minute)/10);
-    document.querySelector('.msec').innerHTML = msecond.toString().length < 2 ? "0" + msecond : msecond;
-    document.querySelector('.sec').innerHTML = second.toString().length < 2 ? ("0" + second) : second;
-    document.querySelector('.min').innerHTML = minute.toString().length < 2 ? ("0" + minute) : minute;
+    let minute = Math.floor((Date.now() - startTime)/60000);
+    let second = Math.floor((Date.now() - startTime) / 1000) - (60 * minute);
+    let msecond = Math.floor(((Date.now() - startTime) - 1000 * second - 60000 * minute)/10);
+    msec.innerHTML = msecond.toString().length < 2 ? "0" + msecond : msecond;
+    sec.innerHTML = second.toString().length < 2 ? ("0" + second) : second;
+    min.innerHTML = minute.toString().length < 2 ? ("0" + minute) : minute;
 }
