@@ -42,6 +42,7 @@ function pushButton(event){
         min.innerHTML = "00";
         lapRecord.innerHTML = "";
         startBtn.classList.remove('block');
+        stopBtn.classList.add('block');
         startTime = 0;
     
     // If Stop button pushed - stop the watch and log the time:
